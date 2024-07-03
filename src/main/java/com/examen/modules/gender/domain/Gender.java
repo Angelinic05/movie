@@ -2,16 +2,32 @@ package com.examen.modules.gender.domain;
 
 public class Gender {
     int id;
-    String name;
+    String type;
 
-    public Country (){}
+    public Gender (){}
 
-    public Country (String name){
-        this.name = name;
+    public Gender (String type){
+        this.type = type;
     }
 
-    public Country(int id, String name) {
+    public Gender(int id, String type) {
         this.id = id;
-        this.name = name;
+        this.type = type;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

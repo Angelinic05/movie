@@ -60,11 +60,11 @@ public class CountryMySQLRepository implements CountryRepository{
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if(resultSet.next()){
-                        Country model = new Country(
+                        Country country = new Country(
                             resultSet.getInt("id"),
                             resultSet.getString("name")
                         );
-                        return Optional.of(model);
+                        return Optional.of(country);
                     }
                 }
             }

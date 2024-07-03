@@ -3,33 +3,33 @@ package com.examen.modules.gender.application;
 import java.util.List;
 import java.util.Optional;
 
-import com.examen.modules.country.domain.Country;
-import com.examen.modules.country.infrastructure.CountryRepository;
+import com.examen.modules.gender.domain.Gender;
+import com.examen.modules.gender.infrastructure.GenderRepository;
 
 public class GenderService {
-    private CountryRepository countryRepository;
+    private GenderRepository genderRepository;
 
-    public CountryService(CountryRepository countryRepository) {
-        this.countryRepository = countryRepository;
+    public GenderService(GenderRepository genderRepository) {
+        this.genderRepository = genderRepository;
     }
 
-    public void saveCountry(Country country){
-        countryRepository.save(country);
+    public void saveGender(Gender gender){
+        genderRepository.save(gender);
 
     }
-    public void deleteCountry(int id){
-        countryRepository.delete(id);
+    public void deleteGender(int id){
+        genderRepository.delete(id);
     }
 
-    public void updateCountry(Country model){
-        countryRepository.update(model);
+    public void updateGender(Gender gender){
+        genderRepository.update(gender);
     }
 
-    public Optional<Country> findByIdCountry(int id){
-        return countryRepository.findById(id);
+    public Optional<Gender> findByIdGender(int id){
+        return genderRepository.findById(id);
     }
 
-    public List<Country> findAllCountry(){
-        return countryRepository.findAll();
+    public List<Gender> findAllGender(){
+        return genderRepository.findAll();
     }
 }

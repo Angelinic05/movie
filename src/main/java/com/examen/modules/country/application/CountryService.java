@@ -22,8 +22,8 @@ public class CountryService {
         countryRepository.delete(id);
     }
 
-    public void updateCountry(Country model){
-        countryRepository.update(model);
+    public void updateCountry(Country country){
+        countryRepository.update(country);
     }
 
     public Optional<Country> findByIdCountry(int id){

@@ -9,25 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.examen.modules.country.domain.Country;
+import com.examen.modules.gender.domain.Gender;
+import com.examen.modules.gender.infrastructure.GenderRepository;
 
-public class GenderMySQLRepository {
+public class GenderMySQLRepository implements GenderRepository {
     private final String url;
     private final String user;
     private final String password;
 
-    public CountryMySQLRepository(String url, String user, String password) {
+    public GenderMySQLRepository(String url, String user, String password) {
         this.url = url;
         this.user = user;
         this.password = password;
     }
 
     @Override
-    public void save(Country country){
+    public void save(Gender gender){
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "INSERT INTO country (name) VALUES (?)";
+            String query = "INSERT INTO gender (type) VALUES (?)";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, country.getName());
+                statement.setString(1, gender.getType());
                 statement.executeUpdate();
             } catch (Exception e) {
                 e.getStackTrace();
@@ -38,12 +39,12 @@ public class GenderMySQLRepository {
     }
 
     @Override
-    public void update(Country country){
+    public void update(Gender gender){
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "UPDATE country SET name = ? WHERE id = ?";
+            String query = "UPDATE gender SET type = ? WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, country.getName());
-                statement.setInt(2, country.getId());
+                statement.setString(1, gender.getType());
+                statement.setInt(2, gender.getId());
                 statement.executeUpdate();                
             }
         } catch (SQLException e) {
@@ -52,18 +53,18 @@ public class GenderMySQLRepository {
     }
     
     @Override
-    public Optional<Country> findById(int id){
+    public Optional<Gender> findById(int id){
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT id, name FROM country WHERE id = ?";
+            String query = "SELECT id, type FROM gender WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if(resultSet.next()){
-                        Country model = new Country(
+                        Gender gender = new Gender(
                             resultSet.getInt("id"),
-                            resultSet.getString("name")
+                            resultSet.getString("type")
                         );
-                        return Optional.of(model);
+                        return Optional.of(gender);
                     }
                 }
             }
@@ -76,35 +77,35 @@ public class GenderMySQLRepository {
     @Override
     public void delete(int id){
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "DELETE FROM country WHERE id = ?";
+            String query = "DELETE FROM gender WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, id);
                 statement.executeUpdate();
             }  
         } catch (SQLException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
     
     @Override
-    public List<Country> findAll(){
-        List<Country> country = new ArrayList<>();
+    public List<Gender> findAll(){
+        List<Gender> gender = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT id, name FROM country";
+            String query = "SELECT id, type FROM gender";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while(resultSet.next()){
-                        Country country2 = new Country(
+                        Gender gender2 = new Gender(
                             resultSet.getInt("id"),
-                            resultSet.getString("name")
+                            resultSet.getString("type")
                         );
-                        country.add(country2);
+                        gender.add(gender2);
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return country;
+        return gender;
     }
 }
